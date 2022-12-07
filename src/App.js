@@ -1,7 +1,7 @@
 import React from "react";
 import SimpleMap from "./components/SimpleMap";
 
-function App() {
+function App(props) {
   return <SimpleMap />;
 }
 

@@ -3,8 +3,10 @@ import {
   LoadScript,
   Marker,
   Polyline,
+  MarkerF,
 } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
+import { YOUR_API_KEY } from "../secret";
 
 //  center on current location onload
 //v 1. make a map with a marker
@@ -56,12 +58,15 @@ const polylineOptions = {
   zIndex: 1,
 };
 
-const YOUR_API_KEY = "AIzaSyD0vHr39NSVFegO4ri_S_9CWSxqdk2Cogk";
+//const YOUR_API_KEY = "AIzaSyD0vHr39NSVFegO4ri_S_9CWSxqdk2Cogk";
 
-export default function SimpleMap() {
+export default function SimpleMap(props) {
   const [currentLocation, setCurrentLocation] = useState(null);
+
   console.log(currentLocation);
+
   const success = (position) => {
+    console.log("position", position);
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
     console.log(lat, lng);
@@ -91,6 +96,14 @@ export default function SimpleMap() {
         {polylinePath && (
           <Polyline path={polylinePath} options={polylineOptions} />
         )}
+        <Marker position={currentLocation} />
+        <Marker
+          icon={
+            "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+          }
+          label='You are here!'
+          position={currentLocation}
+        />
       </GoogleMap>
     </LoadScript>
   );
