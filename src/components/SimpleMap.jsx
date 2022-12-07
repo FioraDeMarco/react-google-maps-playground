@@ -56,7 +56,7 @@ const polylineOptions = {
   zIndex: 1,
 };
 
-const YOUR_API_KEY = "REMEMBER TO ADD YOUR API KEY";
+const YOUR_API_KEY = "AIzaSyD0vHr39NSVFegO4ri_S_9CWSxqdk2Cogk";
 
 export default function SimpleMap() {
   const [currentLocation, setCurrentLocation] = useState(null);
