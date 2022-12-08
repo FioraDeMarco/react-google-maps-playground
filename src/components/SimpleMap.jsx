@@ -4,7 +4,9 @@ import {
   Marker,
   Polyline,
   MarkerF,
+  InfoWindow,
 } from "@react-google-maps/api";
+import { marker } from "leaflet";
 import React, { useEffect, useState } from "react";
 import { YOUR_API_KEY } from "../secret";
 
@@ -57,12 +59,17 @@ const polylineOptions = {
   radius: 30000,
   zIndex: 1,
 };
-
-//const YOUR_API_KEY = "AIzaSyD0vHr39NSVFegO4ri_S_9CWSxqdk2Cogk";
+const marker1 = [
+  {
+    lat: 43.6532,
+    lng: 79.3832,
+  },
+];
 
 export default function SimpleMap(props) {
   const [currentLocation, setCurrentLocation] = useState(null);
-
+  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  const [infoWindow, setInfoWindow] = useState("");
   console.log(currentLocation);
 
   const success = (position) => {
@@ -81,6 +88,12 @@ export default function SimpleMap(props) {
     navigator.geolocation.getCurrentPosition(success, error);
   }, []);
 
+  const handleClick = (e) => {
+    setShowingInfoWindow(true);
+    setInfoWindow("Jamaican me crazy");
+    console.log("Jamaican me crazy");
+  };
+
   return (
     <LoadScript googleMapsApiKey={YOUR_API_KEY}>
       <GoogleMap
@@ -96,7 +109,6 @@ export default function SimpleMap(props) {
         {polylinePath && (
           <Polyline path={polylinePath} options={polylineOptions} />
         )}
-        <Marker position={currentLocation} />
         <Marker
           icon={
             "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
@@ -104,6 +116,32 @@ export default function SimpleMap(props) {
           label='You are here!'
           position={currentLocation}
         />
+        {/* <InfoWindow visible={true}>
+          <div>Jamaican me crazy</div>
+        </InfoWindow> */}
+        <Marker
+          position={currentLocation}
+          icon={require("../icons8-shuttle-bus-48.png")}
+          clickable
+          onClick={handleClick}
+        />
+        {polylinePath.map((marker1) => {
+          return (
+            <>
+              <Marker
+                key='marker_1'
+                onClick={(e) => handleClick}
+                icon={require("../icons8-shuttle-bus-48.png")}
+                label='hello'
+                position={marker1}
+                clickable
+              />
+              {/* <InfoWindow visible={showingInfoWindow}>
+                <div></div>
+              </InfoWindow> */}
+            </>
+          );
+        })}
       </GoogleMap>
     </LoadScript>
   );
